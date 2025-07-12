@@ -10,7 +10,7 @@ This particular fork enables functionality for GNOME 47/48, and has some planned
 ## Installation
 ### Single-line installer
 
-`git clone https://github.com/coolssor/multi-monitor-panel ~/.local/share/gnome-shell/extensions/multi-monitor-panel@coolssor`
+`git clone https://github.com/coolssor/multi-monitor-panel && cd multi-monitor-panel && cp -r multi-monitor-panel@coolssor ~/.local/share/gnome-shell/extensions/`
 
 Once completed, restart the shell (log out and back in, or run `killall -HUP gnome-shell`), then enable the extension.
 
