@@ -30,8 +30,8 @@ function getMainIndicators() {
 	return ret;
 }
 
-export var MultiMonitorsPanel = (() => {
-	let MultiMonitorsPanel = class MultiMonitorsPanel extends Panel.Panel {
+export var MultiMonitorPanel = (() => {
+	let MultiMonitorPanel = class MultiMonitorPanel extends Panel.Panel {
 		_init(monitorIndex, mmPanelBox) {
 			super._init();
 			Main.layoutManager.panelBox.remove_child(this);
@@ -64,5 +64,5 @@ export var MultiMonitorsPanel = (() => {
 		}
 
 	};
-	return GObject.registerClass(MultiMonitorsPanel);
+	return GObject.registerClass(MultiMonitorPanel);
 })();

@@ -28,8 +28,8 @@ export const SHOW_PANEL_ID = 'show-panel';
 export const SHOW_ACTIVITIES_ID = 'show-activities';
 export const ENABLE_HOT_CORNERS = 'enable-hot-corners';
 
-export var MultiMonitorsPrefsWidget = GObject.registerClass(
-    class MultiMonitorsPrefsWidget extends Gtk.Grid {
+export var MultiMonitorPrefsWidget = GObject.registerClass(
+    class MultiMonitorPrefsWidget extends Gtk.Grid {
         _init(p) {
             super._init({
                 margin_top: 6, margin_end: 6, margin_bottom: 6, margin_start: 6
@@ -45,9 +45,8 @@ export var MultiMonitorsPrefsWidget = GObject.registerClass(
             this._display = Gdk.Display.get_default();
             this._monitors = this._display.get_monitors()
 
-            this._addBooleanSwitch(_('Show Multi Monitors indicator on Top Panel.'), SHOW_INDICATOR_ID);
-            this._addBooleanSwitch(_('Show Panel on additional monitors.'), SHOW_PANEL_ID);
-
+            this._addBooleanSwitch(_('Show extension indicator on top panel.'), SHOW_INDICATOR_ID);
+            this._addBooleanSwitch(_('Show panel on additional monitors.'), SHOW_PANEL_ID);
             this._addSettingsBooleanSwitch(_('Enable hot corners.'), this._desktopSettings, ENABLE_HOT_CORNERS);
         }
 
@@ -100,14 +99,14 @@ export var MultiMonitorsPrefsWidget = GObject.registerClass(
         }
     });
 
-export default class MultiMonitorsPreferences extends ExtensionPreferences {
+export default class MultiMonitorPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         window._settings = this.getSettings();
 
         let page = new Adw.PreferencesPage();
         let group = new Adw.PreferencesGroup();
 
-        let widget = new MultiMonitorsPrefsWidget(this);
+        let widget = new MultiMonitorPrefsWidget(this);
         group.add(widget);
         page.add(group);
         window.add(page);

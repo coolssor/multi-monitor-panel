@@ -23,7 +23,7 @@ import * as MMIndicator from './indicator.js'
 
 const SHOW_INDICATOR_ID = 'show-indicator';
 
-export default class MultiMonitorsAddOn extends Extension {
+export default class MultiMonitorPanelExtension extends Extension {
 
     constructor(metadata) {
         super(metadata);
@@ -43,7 +43,7 @@ export default class MultiMonitorsAddOn extends Extension {
     _showIndicator() {
         if (this.mmIndicator)
             return;
-        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorsAddOn', new MMIndicator.MultiMonitorsIndicator());
+        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorPanelExtension', new MMIndicator.MultiMonitorIndicator());
     }
 
     _hideIndicator() {
@@ -56,13 +56,13 @@ export default class MultiMonitorsAddOn extends Extension {
     enable() {
         console.log(`Enabling ${this.metadata.name}`)
 
-        if (Main.panel.statusArea.MultiMonitorsAddOn)
+        if (Main.panel.statusArea.MultiMonitorPanelExtension)
             disable();
 
         this._toggleIndicatorId = this._settings.connect('changed::' + SHOW_INDICATOR_ID, this._toggleIndicator.bind(this));
         this._toggleIndicator();
 
-        this.mmLayoutManager = new MMLayout.MultiMonitorsLayoutManager();
+        this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager();
         this._showPanelId = this._settings.connect('changed::' + MMLayout.SHOW_PANEL_ID, this.mmLayoutManager.showPanel.bind(this.mmLayoutManager));
         this.mmLayoutManager.showPanel();
     }

@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the multi-monitors-add-on package.
+# This file is distributed under the same license as the multi-monitor-panel package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: multi-monitors-add-on\n"
-"Report-Msgid-Bugs-To: https://github.com/spin83/multi-monitors-add-on/"
+"Project-Id-Version: multi-monitor-panel\n"
+"Report-Msgid-Bugs-To: https://github.com/coolssor/multi-monitor-panel/"
 "issues\n"
 "POT-Creation-Date: 2019-10-04 04:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -23,7 +23,7 @@ msgid "Preferences"
 msgstr ""
 
 #: indicator.js:115
-msgid "Multi Monitors Add-On"
+msgid "Multi-monitor panel"
 msgstr ""
 
 #: mmoverview.js:642
@@ -37,35 +37,35 @@ msgid "Activities"
 msgstr ""
 
 #: mmpanel.js:414
-msgid "Top Bar"
+msgid "Top bar"
 msgstr ""
 
 #: prefs.js:62
-msgid "Show Multi Monitors indicator on Top Panel."
+msgid "Show extension indicator on top panel."
 msgstr ""
 
 #: prefs.js:63
-msgid "Show Panel on additional monitors."
+msgid "Show panel on additional monitors."
 msgstr ""
 
 #: prefs.js:64
-msgid "Show Thumbnails-Slider on additional monitors."
+msgid "Show thumbnails slider on additional monitors."
 msgstr ""
 
 #: prefs.js:65
-msgid "Show Activities-Button on additional monitors."
+msgid "Show Activities button on additional monitors."
 msgstr ""
 
 #: prefs.js:66
-msgid "Show AppMenu-Button on additional monitors."
+msgid "Show App menu button on additional monitors."
 msgstr ""
 
 #: prefs.js:67
-msgid "Show DateTime-Button on additional monitors."
+msgid "Show date/time button on additional monitors."
 msgstr ""
 
 #: prefs.js:68
-msgid "Show Thumbnails-Slider on left side of additional monitors."
+msgid "Show thumbnails slider on left side of additional monitors."
 msgstr ""
 
 #: prefs.js:77
@@ -81,7 +81,7 @@ msgid "Add"
 msgstr ""
 
 #: prefs.js:141
-msgid "Indicators on Top Panel"
+msgid "Indicators on top panel"
 msgstr ""
 
 #: prefs.js:170

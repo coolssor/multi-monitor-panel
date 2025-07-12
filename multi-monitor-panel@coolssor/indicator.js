@@ -26,10 +26,10 @@ import { currentExtension } from './globals.js'
 
 import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-export var MultiMonitorsIndicator = (() => {
-    let MultiMonitorsIndicator = class MultiMonitorsIndicator extends PanelMenu.Button {
+export var MultiMonitorIndicator = (() => {
+    let MultiMonitorIndicator = class MultiMonitorIndicator extends PanelMenu.Button {
         _init() {
-            super._init(0.0, "MultiMonitorsAddOn", false);
+            super._init(0.0, "MultiMonitorPanelExtension", false);
 
             this.text = null;
             this._mmStatusIcon = new St.BoxLayout({ style_class: 'multimonitor-status-indicators-box' });
@@ -59,7 +59,7 @@ export var MultiMonitorsIndicator = (() => {
 
             let monitorChange = Main.layoutManager.monitors.length - monitors.length;
             if (monitorChange > 0) {
-                console.log("Add Monitors ...");
+                console.log("Add monitors...");
                 for (let idx = 0; idx < monitorChange; idx++) {
                     let icon;
                     icon = new St.Icon({ style_class: 'system-status-icon multimonitor-status-icon' });
@@ -67,15 +67,15 @@ export var MultiMonitorsIndicator = (() => {
                     icon.connect('notify::visible', this._syncIndicatorsVisible.bind(this));
 
                     if (this._leftRightIcon)
-                        this._icon_name(icon, 'multi-monitors-l-symbolic');
+                        this._icon_name(icon, 'multi-monitor-l-symbolic');
                     else
-                        this._icon_name(icon, 'multi-monitors-r-symbolic');
+                        this._icon_name(icon, 'multi-monitor-r-symbolic');
                     this._leftRightIcon = !this._leftRightIcon;
                 }
                 this._syncIndicatorsVisible();
             }
             else if (monitorChange < 0) {
-                console.log("Remove Monitors ...");
+                console.log("Remove monitors...");
                 monitorChange = -monitorChange;
 
                 for (let idx = 0; idx < monitorChange; idx++) {
@@ -88,7 +88,7 @@ export var MultiMonitorsIndicator = (() => {
         }
 
         _onPreferences() {
-            const uuid = "multi-monitors-add-on@spin83";
+            const uuid = "multi-monitor-panel@coolssor";
             Gio.DBus.session.call(
                 'org.gnome.Shell.Extensions',
                 '/org/gnome/Shell/Extensions',
@@ -101,5 +101,5 @@ export var MultiMonitorsIndicator = (() => {
                 null);
         }
     };
-    return GObject.registerClass(MultiMonitorsIndicator);
+    return GObject.registerClass(MultiMonitorIndicator);
 })();

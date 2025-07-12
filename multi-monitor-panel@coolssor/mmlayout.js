@@ -14,7 +14,7 @@ var { mmPanel } = g
 var SHOW_PANEL_ID = 'show-panel';
 var ENABLE_HOT_CORNERS = 'enable-hot-corners';
 
-export const MultiMonitorsPanelBox = class MultiMonitorsPanelBox {
+export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
 	constructor(monitor) {
 		this.panelBox = new St.BoxLayout({ name: 'panelBox', vertical: true, clip_to_allocation: true });
 		Main.layoutManager.addChrome(this.panelBox, { affectsStruts: true, trackFullscreen: true });
@@ -33,7 +33,7 @@ export const MultiMonitorsPanelBox = class MultiMonitorsPanelBox {
 	}
 };
 
-export var MultiMonitorsLayoutManager = class MultiMonitorsLayoutManager {
+export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 	constructor() {
 		this._settings = currentExtension().getSettings();
 		this._desktopSettings = currentExtension().getSettings("org.gnome.desktop.interface");
@@ -157,8 +157,8 @@ export var MultiMonitorsLayoutManager = class MultiMonitorsLayoutManager {
 	}
 
 	_pushPanel(i, monitor) {
-		let mmPanelBox = new MultiMonitorsPanelBox(monitor);
-		let panel = new MMPanel.MultiMonitorsPanel(i, mmPanelBox);
+		let mmPanelBox = new MultiMonitorPanelBox(monitor);
+		let panel = new MMPanel.MultiMonitorPanel(i, mmPanelBox);
 
 		mmPanel.push(panel);
 		this.mmPanelBox.push(mmPanelBox);

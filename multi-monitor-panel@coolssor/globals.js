@@ -6,7 +6,7 @@ export var g = {
 }
 
 export function currentExtension() {
-    return Extension.lookupByUUID("multi-monitors-add-on@spin83");
+    return Extension.lookupByUUID("multi-monitor-panel@coolssor");
 }
 
 export function unhideClass(classId) {
