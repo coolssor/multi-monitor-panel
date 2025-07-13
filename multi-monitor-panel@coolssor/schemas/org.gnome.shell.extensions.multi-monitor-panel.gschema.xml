@@ -24,7 +24,7 @@
       <summary>Show App menu button on additional monitors.</summary>
       <description>Change visibility of the App menu button on additional monitors.</description>
     </key>
-    
+
     <key name="show-date-time" type="b">
       <default>true</default>
       <summary>Show date/time button on additional monitors.</summary>
