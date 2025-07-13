@@ -42,7 +42,7 @@ export default class MultiMonitorPanelExtension extends Extension {
     _showIndicator() {
         if (this.mmIndicator)
             return;
-        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorPanelExtension', new MMIndicator.MultiMonitorIndicator(this));
+        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorPanelExtension', new MMIndicator.MultiMonitorIndicator(this._settings));
     }
 
     _hideIndicator() {
@@ -61,10 +61,12 @@ export default class MultiMonitorPanelExtension extends Extension {
         this.mmIndicator = null;
         this.mmLayoutManager = null;
 
+        this._settings = this.getSettings();
+
         this._toggleIndicatorId = this._settings.connect('changed::' + SHOW_INDICATOR_ID, this._toggleIndicator.bind(this));
         this._toggleIndicator();
 
-        this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager(this);
+        this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager(this._settings);
         this.mmLayoutManager.showPanel();
     }
 
