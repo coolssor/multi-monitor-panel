@@ -28,9 +28,6 @@ export default class MultiMonitorPanelExtension extends Extension {
     constructor(metadata) {
         super(metadata);
         this._settings = this.getSettings();
-
-        this.mmIndicator = null;
-        this.mmLayoutManager = null;
     }
 
     _toggleIndicator() {
@@ -59,6 +56,9 @@ export default class MultiMonitorPanelExtension extends Extension {
         if (Main.panel.statusArea.MultiMonitorPanelExtension)
             disable();
 
+        this.mmIndicator = null;
+        this.mmLayoutManager = null;
+
         this._toggleIndicatorId = this._settings.connect('changed::' + SHOW_INDICATOR_ID, this._toggleIndicator.bind(this));
         this._toggleIndicator();
 
@@ -68,11 +68,13 @@ export default class MultiMonitorPanelExtension extends Extension {
 
     disable() {
         this._settings.disconnect(this._toggleIndicatorId);
+        this._toggleIndicatorId = null;
         this._hideIndicator();
+        this.mmIndicator = null;
+        this._settings = null;
 
         this.mmLayoutManager.hidePanel();
         this.mmLayoutManager = null;
-
         console.log(`Disabled ${this.metadata.name} ...`)
     }
 }
