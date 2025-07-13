@@ -1,16 +1,12 @@
 import GObject from 'gi://GObject';
-import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { extensionInstance } from './extension.js';
 
 export var g = {
     mmPanel: []
-}
-
-export function currentExtension() {
-    return Extension.lookupByUUID("multi-monitor-panel@coolssor");
-}
+};
 
 export function unhideClass(classId) {
-    let tmp = GObject.Object.new(GObject.type_from_name(classId));
+    let tmp = extensionInstance.getSettings().get_boolean(classId);
     return tmp;
 }
 
