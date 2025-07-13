@@ -11,7 +11,6 @@ import * as MMPanel from './mmpanel.js'
 import { g, currentExtension } from './globals.js'
 var { mmPanel } = g
 
-var SHOW_PANEL_ID = 'show-panel';
 var ENABLE_HOT_CORNERS = 'enable-hot-corners';
 
 export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
@@ -50,53 +49,48 @@ export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 	}
 
 	showPanel() {
-		if (this._settings.get_boolean(SHOW_PANEL_ID)) {
-			if (!this._monitorsChangedId) {
-				this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', this._monitorsChanged.bind(this));
-				this._monitorsChanged();
-			}
+		if (!this._monitorsChangedId) {
+			this._monitorsChangedId = Main.layoutManager.connect('monitors-changed', this._monitorsChanged.bind(this));
+			this._monitorsChanged();
+		}
 
-			if (!this._layoutManager_updateHotCorners) {
-				this._layoutManager_updateHotCorners = Main.layoutManager._updateHotCorners;
+		if (!this._layoutManager_updateHotCorners) {
+			this._layoutManager_updateHotCorners = Main.layoutManager._updateHotCorners;
 
-				const _this = this;
-				Main.layoutManager._updateHotCorners = function () {
-					this.hotCorners.forEach((corner) => {
-						if (corner)
-							corner.destroy();
-					});
-					this.hotCorners = [];
+			const _this = this;
+			Main.layoutManager._updateHotCorners = function () {
+				this.hotCorners.forEach((corner) => {
+					if (corner)
+						corner.destroy();
+				});
+				this.hotCorners = [];
 
-					if (!_this._desktopSettings.get_boolean(ENABLE_HOT_CORNERS)) {
-						this.emit('hot-corners-changed');
-						return;
-					}
-
-					let size = this.panelBox.height;
-
-					for (let i = 0; i < this.monitors.length; i++) {
-						let monitor = this.monitors[i];
-						let cornerX = this._rtl ? monitor.x + monitor.width : monitor.x;
-						let cornerY = monitor.y;
-
-						let corner = new Layout.HotCorner(this, monitor, cornerX, cornerY);
-						corner.setBarrierSize(size);
-						this.hotCorners.push(corner);
-					}
-
+				if (!_this._desktopSettings.get_boolean(ENABLE_HOT_CORNERS)) {
 					this.emit('hot-corners-changed');
-				};
-
-				if (!this._changedEnableHotCornersId) {
-					this._changedEnableHotCornersId = this._desktopSettings.connect('changed::' + ENABLE_HOT_CORNERS,
-						Main.layoutManager._updateHotCorners.bind(Main.layoutManager));
+					return;
 				}
 
-				Main.layoutManager._updateHotCorners();
+				let size = this.panelBox.height;
+
+				for (let i = 0; i < this.monitors.length; i++) {
+					let monitor = this.monitors[i];
+					let cornerX = this._rtl ? monitor.x + monitor.width : monitor.x;
+					let cornerY = monitor.y;
+
+					let corner = new Layout.HotCorner(this, monitor, cornerX, cornerY);
+					corner.setBarrierSize(size);
+					this.hotCorners.push(corner);
+				}
+
+				this.emit('hot-corners-changed');
+			};
+
+			if (!this._changedEnableHotCornersId) {
+				this._changedEnableHotCornersId = this._desktopSettings.connect('changed::' + ENABLE_HOT_CORNERS,
+					Main.layoutManager._updateHotCorners.bind(Main.layoutManager));
 			}
-		}
-		else {
-			this.hidePanel();
+
+			Main.layoutManager._updateHotCorners();
 		}
 	}
 
