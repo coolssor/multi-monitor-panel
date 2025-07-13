@@ -6,5 +6,5 @@
     "gettext-domain": "multi-monitor-panel",
     "description": "Show the GNOME top panel on all monitors",
     "url": "https://github.com/coolssor/multi-monitor-panel",
-    "version": 1
+    "version": 2
 }
