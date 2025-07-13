@@ -28,8 +28,9 @@ import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.j
 
 export var MultiMonitorIndicator = (() => {
     let MultiMonitorIndicator = class MultiMonitorIndicator extends PanelMenu.Button {
-        _init() {
-            super._init(0.0, "MultiMonitorPanelExtension", false);
+        constructor(settings) {
+            super(0.0, "MultiMonitorPanelExtension", false);
+            this._settings = settings;
 
             this.text = null;
             this._mmStatusIcon = new St.BoxLayout({ style_class: 'multimonitor-status-indicators-box' });
