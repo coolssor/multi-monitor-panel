@@ -18,7 +18,6 @@ export function copyClass(s, d) {
     if (!s) {
         console.error(`copyClass s undefined for d ${d.name}`)
         return
-        //throw Error(`copyClass s undefined for d ${d.name}`)
     }
 
     let prototype = s.prototype ? s.prototype : Object.getPrototypeOf(s);

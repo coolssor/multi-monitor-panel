@@ -38,7 +38,6 @@ export var MultiMonitorPanel = (() => {
 			mmPanelBox.panelBox.add_child(this);
 			this.monitorIndex = monitorIndex;
 			this.connect('destroy', this._onDestroy.bind(this));
-			// this._syncIndicators()
 		}
 
 		_syncIndicators() {
