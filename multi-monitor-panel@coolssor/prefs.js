@@ -24,7 +24,6 @@ import Gio from 'gi://Gio';
 import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 export const SHOW_INDICATOR_ID = 'show-indicator';
-export const SHOW_PANEL_ID = 'show-panel';
 export const SHOW_ACTIVITIES_ID = 'show-activities';
 export const ENABLE_HOT_CORNERS = 'enable-hot-corners';
 
@@ -45,9 +44,8 @@ export var MultiMonitorPrefsWidget = GObject.registerClass(
             this._display = Gdk.Display.get_default();
             this._monitors = this._display.get_monitors()
 
-            this._addBooleanSwitch(_('Show extension indicator on top panel.'), SHOW_INDICATOR_ID);
-            this._addBooleanSwitch(_('Show panel on additional monitors.'), SHOW_PANEL_ID);
-            this._addSettingsBooleanSwitch(_('Enable hot corners.'), this._desktopSettings, ENABLE_HOT_CORNERS);
+            this._addBooleanSwitch(_('Show extension indicator on top panel'), SHOW_INDICATOR_ID);
+            this._addSettingsBooleanSwitch(_('Enable hot corners'), this._desktopSettings, ENABLE_HOT_CORNERS);
         }
 
         add(child) {
