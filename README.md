@@ -1,4 +1,5 @@
 # Multi-monitor panel
+![A screenshot showing 2 monitors, both with a top panel](img/Screenshot.jpg)
 ## About
 
 As the name of the extension implies, this enables the display of the top panel in GNOME on all monitors, rather than just the primary one.
