@@ -63,12 +63,10 @@ export default class MultiMonitorPanelExtension extends Extension {
         this._toggleIndicator();
 
         this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager();
-        this._showPanelId = this._settings.connect('changed::' + MMLayout.SHOW_PANEL_ID, this.mmLayoutManager.showPanel.bind(this.mmLayoutManager));
         this.mmLayoutManager.showPanel();
     }
 
     disable() {
-        this._settings.disconnect(this._showPanelId);
         this._settings.disconnect(this._toggleIndicatorId);
         this._hideIndicator();
 
