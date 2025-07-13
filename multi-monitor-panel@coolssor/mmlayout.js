@@ -34,8 +34,8 @@ export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
 };
 
 export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
-	constructor() {
-		this._settings = extensionInstance.getSettings();
+	constructor(settings) {
+		this._settings = settings;
 		this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
 
 		mmPanel = [];
