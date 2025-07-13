@@ -22,7 +22,7 @@ import GObject from 'gi://GObject';
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
-import { currentExtension } from './globals.js'
+import { extensionInstance } from './extension.js';
 
 import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
@@ -51,7 +51,7 @@ export var MultiMonitorIndicator = (() => {
         }
 
         _icon_name(icon, iconName) {
-            icon.set_gicon(Gio.icon_new_for_string(currentExtension().path + "/icons/" + iconName + ".svg"));
+            icon.set_gicon(Gio.icon_new_for_string(extensionInstance.path + "/icons/" + iconName + ".svg"));
         }
 
         _viewMonitors() {
@@ -103,3 +103,10 @@ export var MultiMonitorIndicator = (() => {
     };
     return GObject.registerClass(MultiMonitorIndicator);
 })();
+
+export class MultiMonitorLayoutManager {
+    constructor() {
+        this._settings = extensionInstance.getSettings();
+        this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
+    }
+}
