@@ -23,7 +23,7 @@ function getMainIndicators() {
 	let ret = {}
 	Object.entries(Main.panel.statusArea)
 		.forEach(([key, value]) => {
-			if (true || (key.startsWith("appindicator-") && ["IndicatorStatusTrayIcon", "IndicatorStatusIcon"].includes(value.constructor.name))) {
+			if (key.startsWith("appindicator-") && ["IndicatorStatusTrayIcon", "IndicatorStatusIcon"].includes(value.constructor.name)) {
 				ret[key] = value;
 			}
 		})
@@ -45,7 +45,7 @@ export var MultiMonitorPanel = (() => {
 			Object.entries(getMainIndicators()).forEach(([key, value]) => {
 				try {
 					this.addToStatusArea(key, value, 1);
-				} catch (e) {
+				} catch {
 					console.warn("Skipping role: " + key);
 				}
 			})
@@ -55,7 +55,7 @@ export var MultiMonitorPanel = (() => {
 			Main.ctrlAltTabManager.removeGroup(this);
 		}
 
-		vfunc_get_preferred_width(_forHeight) {
+		vfunc_get_preferred_width() {
 			if (Main.layoutManager.monitors.length > this.monitorIndex)
 				return [0, Main.layoutManager.monitors[this.monitorIndex].width];
 
