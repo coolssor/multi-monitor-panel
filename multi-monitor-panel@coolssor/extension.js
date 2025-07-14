@@ -16,7 +16,7 @@ along with this program; if not, visit https://www.gnu.org/licenses/.
 */
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
-import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import * as MMLayout from './mmlayout.js';
 import * as MMIndicator from './indicator.js';
@@ -56,7 +56,7 @@ export default class MultiMonitorPanelExtension extends Extension {
         console.log(`Enabling ${this.metadata.name}`);
 
         if (Main.panel.statusArea.MultiMonitorPanelExtension)
-            disable();
+            this.disable();
 
         this.mmIndicator = null;
         this.mmLayoutManager = null;
