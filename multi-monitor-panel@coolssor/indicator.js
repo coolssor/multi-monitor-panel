@@ -37,6 +37,13 @@ export var MultiMonitorIndicator = (() => {
             this._mmStatusIcon.hide();
             this.add_child(this._mmStatusIcon);
             this._leftRightIcon = true;
+
+            const title = new St.Label({
+                text: _("Multi-monitor panel"),
+                style_class: 'multimonitor-menu-title'
+            });
+            this.menu.box.add_child(title);
+
             this.menu.addAction(_("Preferences"), this._onPreferences.bind(this));
             this._viewMonitorsId = Main.layoutManager.connect('monitors-changed', this._viewMonitors.bind(this));
             this._viewMonitors();
