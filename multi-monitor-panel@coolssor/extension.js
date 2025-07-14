@@ -16,21 +16,20 @@ along with this program; if not, visit https://www.gnu.org/licenses/.
 */
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
-import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-import * as MMLayout from './mmlayout.js'
-import * as MMIndicator from './indicator.js'
+import * as MMLayout from './mmlayout.js';
+import * as MMIndicator from './indicator.js';
 
 const SHOW_INDICATOR_ID = 'show-indicator';
 
-export default class MultiMonitorPanelExtension extends Extension {
+export let extensionInstance = null;
 
+export default class MultiMonitorPanelExtension extends Extension {
     constructor(metadata) {
         super(metadata);
         this._settings = this.getSettings();
-
-        this.mmIndicator = null;
-        this.mmLayoutManager = null;
+        extensionInstance = this;
     }
 
     _toggleIndicator() {
@@ -43,36 +42,43 @@ export default class MultiMonitorPanelExtension extends Extension {
     _showIndicator() {
         if (this.mmIndicator)
             return;
-        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorPanelExtension', new MMIndicator.MultiMonitorIndicator());
+        this.mmIndicator = Main.panel.addToStatusArea('MultiMonitorPanelExtension', new MMIndicator.MultiMonitorIndicator(this._settings));
     }
 
     _hideIndicator() {
         if (!this.mmIndicator)
-            return
+            return;
         this.mmIndicator.destroy();
         this.mmIndicator = null;
     }
 
     enable() {
-        console.log(`Enabling ${this.metadata.name}`)
+        console.log(`Enabling ${this.metadata.name}`);
 
         if (Main.panel.statusArea.MultiMonitorPanelExtension)
-            disable();
+            this.disable();
+
+        this.mmIndicator = null;
+        this.mmLayoutManager = null;
+
+        this._settings = this.getSettings();
 
         this._toggleIndicatorId = this._settings.connect('changed::' + SHOW_INDICATOR_ID, this._toggleIndicator.bind(this));
         this._toggleIndicator();
 
-        this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager();
+        this.mmLayoutManager = new MMLayout.MultiMonitorLayoutManager(this._settings);
         this.mmLayoutManager.showPanel();
     }
 
     disable() {
         this._settings.disconnect(this._toggleIndicatorId);
+        this._toggleIndicatorId = null;
         this._hideIndicator();
+        this.mmIndicator = null;
+        this._settings = null;
 
         this.mmLayoutManager.hidePanel();
         this.mmLayoutManager = null;
-
-        console.log(`Disabled ${this.metadata.name} ...`)
+        console.log(`Disabled ${this.metadata.name} ...`);
     }
 }

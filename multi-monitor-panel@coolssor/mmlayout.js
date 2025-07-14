@@ -8,7 +8,8 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as Layout from 'resource:///org/gnome/shell/ui/layout.js';
 
 import * as MMPanel from './mmpanel.js'
-import { g, currentExtension } from './globals.js'
+import { g } from './globals.js'
+import { extensionInstance } from './extension.js';
 var { mmPanel } = g
 
 var ENABLE_HOT_CORNERS = 'enable-hot-corners';
@@ -33,9 +34,9 @@ export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
 };
 
 export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
-	constructor() {
-		this._settings = currentExtension().getSettings();
-		this._desktopSettings = currentExtension().getSettings("org.gnome.desktop.interface");
+	constructor(settings) {
+		this._settings = settings;
+		this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
 
 		mmPanel = [];
 
@@ -96,7 +97,7 @@ export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 
 	hidePanel() {
 		if (this._changedEnableHotCornersId) {
-			global.settings.disconnect(this._changedEnableHotCornersId);
+			this._desktopSettings.disconnect(this._changedEnableHotCornersId);
 			this._changedEnableHotCornersId = null;
 		}
 

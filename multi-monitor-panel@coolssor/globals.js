@@ -1,16 +1,11 @@
-import GObject from 'gi://GObject';
-import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { extensionInstance } from './extension.js';
 
 export var g = {
     mmPanel: []
-}
-
-export function currentExtension() {
-    return Extension.lookupByUUID("multi-monitor-panel@coolssor");
-}
+};
 
 export function unhideClass(classId) {
-    let tmp = GObject.Object.new(GObject.type_from_name(classId));
+    let tmp = extensionInstance.getSettings().get_boolean(classId);
     return tmp;
 }
 
@@ -18,7 +13,6 @@ export function copyClass(s, d) {
     if (!s) {
         console.error(`copyClass s undefined for d ${d.name}`)
         return
-        //throw Error(`copyClass s undefined for d ${d.name}`)
     }
 
     let prototype = s.prototype ? s.prototype : Object.getPrototypeOf(s);
@@ -26,7 +20,7 @@ export function copyClass(s, d) {
 
     for (let pName of propertyNames.values()) {
         if (typeof pName === "symbol") continue;
-        if (d.prototype.hasOwnProperty(pName)) continue;
+        if (Object.prototype.hasOwnProperty.call(d.prototype, pName)) continue;
         if (pName === "prototype") continue;
         if (pName === "constructor") continue;
         let pDesc = Reflect.getOwnPropertyDescriptor(prototype, pName);

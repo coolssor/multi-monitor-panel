@@ -22,20 +22,28 @@ import GObject from 'gi://GObject';
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
-import { currentExtension } from './globals.js'
+import { extensionInstance } from './extension.js';
 
 import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 export var MultiMonitorIndicator = (() => {
     let MultiMonitorIndicator = class MultiMonitorIndicator extends PanelMenu.Button {
-        _init() {
-            super._init(0.0, "MultiMonitorPanelExtension", false);
+        constructor(settings) {
+            super(0.0, "MultiMonitorPanelExtension", false);
+            this._settings = settings;
 
             this.text = null;
             this._mmStatusIcon = new St.BoxLayout({ style_class: 'multimonitor-status-indicators-box' });
             this._mmStatusIcon.hide();
             this.add_child(this._mmStatusIcon);
             this._leftRightIcon = true;
+
+            const title = new St.Label({
+                text: _("Multi-monitor panel"),
+                style_class: 'multimonitor-menu-title'
+            });
+            this.menu.box.add_child(title);
+
             this.menu.addAction(_("Preferences"), this._onPreferences.bind(this));
             this._viewMonitorsId = Main.layoutManager.connect('monitors-changed', this._viewMonitors.bind(this));
             this._viewMonitors();
@@ -51,40 +59,24 @@ export var MultiMonitorIndicator = (() => {
         }
 
         _icon_name(icon, iconName) {
-            icon.set_gicon(Gio.icon_new_for_string(currentExtension().path + "/icons/" + iconName + ".svg"));
+            icon.set_gicon(Gio.icon_new_for_string(extensionInstance.path + "/icons/" + iconName + ".svg"));
         }
 
         _viewMonitors() {
-            let monitors = this._mmStatusIcon.get_children();
+            // Clear any existing icons
+            this._mmStatusIcon.get_children().forEach(child => {
+            this._mmStatusIcon.remove_child(child);
+            child.destroy();
+            });
 
-            let monitorChange = Main.layoutManager.monitors.length - monitors.length;
-            if (monitorChange > 0) {
-                console.log("Add monitors...");
-                for (let idx = 0; idx < monitorChange; idx++) {
-                    let icon;
-                    icon = new St.Icon({ style_class: 'system-status-icon multimonitor-status-icon' });
-                    this._mmStatusIcon.add_child(icon);
-                    icon.connect('notify::visible', this._syncIndicatorsVisible.bind(this));
+            // Add a single icon for joined displays
+            let icon = new St.Icon({
+            style_class: 'system-status-icon multimonitor-status-icon'
+            });
+            this._icon_name(icon, 'joined-displays-symbolic');
+            this._mmStatusIcon.add_child(icon);
 
-                    if (this._leftRightIcon)
-                        this._icon_name(icon, 'multi-monitor-l-symbolic');
-                    else
-                        this._icon_name(icon, 'multi-monitor-r-symbolic');
-                    this._leftRightIcon = !this._leftRightIcon;
-                }
-                this._syncIndicatorsVisible();
-            }
-            else if (monitorChange < 0) {
-                console.log("Remove monitors...");
-                monitorChange = -monitorChange;
-
-                for (let idx = 0; idx < monitorChange; idx++) {
-                    let icon = this._mmStatusIcon.get_last_child();
-                    this._mmStatusIcon.remove_child(icon);
-                    icon.destroy();
-                    this._leftRightIcon = !this._leftRightIcon;
-                }
-            }
+            this._syncIndicatorsVisible();
         }
 
         _onPreferences() {
@@ -103,3 +95,10 @@ export var MultiMonitorIndicator = (() => {
     };
     return GObject.registerClass(MultiMonitorIndicator);
 })();
+
+export class MultiMonitorLayoutManager {
+    constructor() {
+        this._settings = extensionInstance.getSettings();
+        this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
+    }
+}
