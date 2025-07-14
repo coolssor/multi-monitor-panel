@@ -63,36 +63,20 @@ export var MultiMonitorIndicator = (() => {
         }
 
         _viewMonitors() {
-            let monitors = this._mmStatusIcon.get_children();
+            // Clear any existing icons
+            this._mmStatusIcon.get_children().forEach(child => {
+            this._mmStatusIcon.remove_child(child);
+            child.destroy();
+            });
 
-            let monitorChange = Main.layoutManager.monitors.length - monitors.length;
-            if (monitorChange > 0) {
-                console.log("Add monitors...");
-                for (let idx = 0; idx < monitorChange; idx++) {
-                    let icon;
-                    icon = new St.Icon({ style_class: 'system-status-icon multimonitor-status-icon' });
-                    this._mmStatusIcon.add_child(icon);
-                    icon.connect('notify::visible', this._syncIndicatorsVisible.bind(this));
+            // Add a single icon for joined displays
+            let icon = new St.Icon({
+            style_class: 'system-status-icon multimonitor-status-icon'
+            });
+            this._icon_name(icon, 'joined-displays-symbolic');
+            this._mmStatusIcon.add_child(icon);
 
-                    if (this._leftRightIcon)
-                        this._icon_name(icon, 'multi-monitor-l-symbolic');
-                    else
-                        this._icon_name(icon, 'multi-monitor-r-symbolic');
-                    this._leftRightIcon = !this._leftRightIcon;
-                }
-                this._syncIndicatorsVisible();
-            }
-            else if (monitorChange < 0) {
-                console.log("Remove monitors...");
-                monitorChange = -monitorChange;
-
-                for (let idx = 0; idx < monitorChange; idx++) {
-                    let icon = this._mmStatusIcon.get_last_child();
-                    this._mmStatusIcon.remove_child(icon);
-                    icon.destroy();
-                    this._leftRightIcon = !this._leftRightIcon;
-                }
-            }
+            this._syncIndicatorsVisible();
         }
 
         _onPreferences() {
