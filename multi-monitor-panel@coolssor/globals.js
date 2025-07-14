@@ -1,4 +1,3 @@
-import GObject from 'gi://GObject';
 import { extensionInstance } from './extension.js';
 
 export var g = {
@@ -21,7 +20,7 @@ export function copyClass(s, d) {
 
     for (let pName of propertyNames.values()) {
         if (typeof pName === "symbol") continue;
-        if (d.prototype.hasOwnProperty(pName)) continue;
+        if (Object.prototype.hasOwnProperty.call(d.prototype, pName)) continue;
         if (pName === "prototype") continue;
         if (pName === "constructor") continue;
         let pDesc = Reflect.getOwnPropertyDescriptor(prototype, pName);
