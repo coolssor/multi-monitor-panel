@@ -127,16 +127,25 @@ export default class MultiMonitorPreferences extends ExtensionPreferences {
         let aboutAction = new Gio.SimpleAction({ name: 'about' });
         aboutAction.connect('activate', () => {
             let aboutDialog = new Gtk.MessageDialog({
-                transient_for: window,
-                modal: true,
-                buttons: Gtk.ButtonsType.OK,
-                text: _('About Multi-monitor panel'),
-                secondary_text: _('Underdeveloped by coolssor.\n\nVersion: 1.2\n\nThank you for using this extension!')
+            transient_for: window,
+            modal: true,
+            buttons: Gtk.ButtonsType.OK,
+            text: _('About Multi-monitor panel'),
+            secondary_text: _(
+                'Underdeveloped by coolssor.\n\n' +
+                'Credit for the majority of the work goes to ' +
+                '<a href="https://github.com/lazanet/multi-monitors-add-on">lazanet</a>, ' +
+                '<a href="https://github.com/spin83/multi-monitors-add-on">spin83</a>, and ' +
+                '<a href="https://github.com/darkxst/multiple-monitor-panels">darkxst</a>.\n\n' +
+                'Version: 1.2\n\n' +
+                'Thank you for using this extension!'
+            ),
+            secondary_use_markup: true,
             });
 
             let githubButton = aboutDialog.add_button(_('GitHub'), Gtk.ResponseType.NONE);
             githubButton.connect('clicked', () => {
-                Gio.AppInfo.launch_default_for_uri('https://github.com/coolssor/multi-monitor-panel', null);
+            Gio.AppInfo.launch_default_for_uri('https://github.com/coolssor/multi-monitor-panel', null);
             });
 
             aboutDialog.connect('response', () => aboutDialog.destroy());
