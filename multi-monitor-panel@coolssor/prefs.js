@@ -107,6 +107,53 @@ export default class MultiMonitorPreferences extends ExtensionPreferences {
         let widget = new MultiMonitorPrefsWidget(this);
         group.add(widget);
         page.add(group);
-        window.add(page);
+
+        // Create a header bar using Adw.HeaderBar
+        let headerBar = new Adw.HeaderBar({ title_widget: null });
+        let menuButton = new Gtk.MenuButton({ valign: Gtk.Align.CENTER });
+        let menuIcon = new Gtk.Image({ icon_name: 'open-menu-symbolic' }); // Use menu icon (3 lines)
+        menuButton.set_child(menuIcon); // Set the icon as the child of the menu button
+        let menuModel = new Gio.Menu();
+        menuModel.append(_('About'), 'app.about');
+
+        let popoverMenu = new Gtk.PopoverMenu({
+            menu_model: menuModel,
+        });
+        menuButton.set_popover(popoverMenu);
+        headerBar.pack_end(menuButton);
+
+        // Handle "About" menu action
+        let actionGroup = new Gio.SimpleActionGroup();
+        let aboutAction = new Gio.SimpleAction({ name: 'about' });
+        aboutAction.connect('activate', () => {
+            let aboutDialog = new Gtk.MessageDialog({
+                transient_for: window,
+                modal: true,
+                buttons: Gtk.ButtonsType.OK,
+                text: _('About Multi-monitor panel'),
+                secondary_text: _('Underdeveloped by coolssor.\n\nVersion: 1.2\n\nThank you for using this extension!')
+            });
+
+            let githubButton = aboutDialog.add_button(_('GitHub'), Gtk.ResponseType.NONE);
+            githubButton.connect('clicked', () => {
+                Gio.AppInfo.launch_default_for_uri('https://github.com/coolssor/multi-monitor-panel', null);
+            });
+
+            aboutDialog.connect('response', () => aboutDialog.destroy());
+            aboutDialog.show();
+        });
+        actionGroup.add_action(aboutAction);
+        window.insert_action_group('app', actionGroup);
+
+        // Add the header bar to the top of the preferences page
+        let mainBox = new Gtk.Box({
+            orientation: Gtk.Orientation.VERTICAL,
+            spacing: 10,
+        });
+        mainBox.append(headerBar);
+        mainBox.append(page);
+
+        // Add the main box to the window
+        window.set_content(mainBox);
     }
 }
