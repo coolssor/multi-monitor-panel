@@ -97,7 +97,7 @@ export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 
 	hidePanel() {
 		if (this._changedEnableHotCornersId) {
-			global.settings.disconnect(this._changedEnableHotCornersId);
+			this._desktopSettings.disconnect(this._changedEnableHotCornersId);
 			this._changedEnableHotCornersId = null;
 		}
 
