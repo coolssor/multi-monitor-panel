@@ -1,13 +1,13 @@
 /* Modified by coolssor */
 
 import St from 'gi://St'; // Import the St library for creating UI elements.
+import Gio from 'gi://Gio'; // Import the Gio library for accessing settings.
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js'; // Import the main GNOME Shell UI module.
 import * as Layout from 'resource:///org/gnome/shell/ui/layout.js'; // Import the layout module for managing UI layout.
 
 import * as MMPanel from './mmpanel.js'; // Import the custom Multi-monitor panel module.
 import { g } from './globals.js'; // Import global variables.
-import { extensionInstance } from './extension.js'; // Import the extension instance for accessing settings.
 var { mmPanel } = g; // Extract the `mmPanel` array from global variables.
 
 var ENABLE_HOT_CORNERS = 'enable-hot-corners'; // Define the key for enabling/disabling hot corners.
@@ -41,7 +41,7 @@ export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 	constructor(settings) {
 		// Initialize the layout manager with settings.
 		this._settings = settings;
-		this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
+		this._desktopSettings = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
 
 		mmPanel = []; // Initialize the array to store panel instances.
 
