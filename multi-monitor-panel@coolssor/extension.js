@@ -35,7 +35,6 @@ export let extensionInstance = null;
 export default class MultiMonitorPanelExtension extends Extension {
     constructor(metadata) {
         super(metadata); // Call the parent class constructor with metadata
-        this._settings = this.getSettings(); // Retrieve the extension's settings
         extensionInstance = this; // Store the current instance globally
     }
 
