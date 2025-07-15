@@ -133,9 +133,9 @@ export var MultiMonitorIndicator = (() => {
 export class MultiMonitorLayoutManager {
     constructor() {
         // Get the extension's settings
-        this._settings = extensionInstance.getSettings();
+        this._settings = extensionInstance._settings();
 
         // Get the desktop interface settings
-        this._desktopSettings = extensionInstance.getSettings("org.gnome.desktop.interface");
+        this._desktopSettings = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
     }
 }
