@@ -41,16 +41,15 @@ function getMainIndicators() {
 /**
  * MultiMonitorPanel class extends the GNOME Shell's Panel class to support multiple monitors.
  */
-export var MultiMonitorPanel = (() => {
-	// Define the MultiMonitorPanel class.
-	let MultiMonitorPanel = class MultiMonitorPanel extends Panel.Panel {
+export const MultiMonitorPanel = GObject.registerClass(
+	class MultiMonitorPanel extends Panel.Panel {
 		/**
 		 * Constructor for initializing the MultiMonitorPanel.
 		 * @param {number} monitorIndex - The index of the monitor this panel belongs to.
 		 * @param {Object} mmPanelBox - The container for the multi-monitor panel.
 		 */
-		_init(monitorIndex, mmPanelBox) {
-			super._init(); // Call the parent class's constructor.
+		constructor(monitorIndex, mmPanelBox) {
+			super(); // Call the parent class's constructor.
 			Main.layoutManager.panelBox.remove_child(this); // Remove the panel from the default panel box.
 			mmPanelBox.panelBox.add_child(this); // Add the panel to the custom multi-monitor panel box.
 			this.monitorIndex = monitorIndex; // Store the monitor index.
@@ -93,8 +92,5 @@ export var MultiMonitorPanel = (() => {
 			// Return zero width if the monitor index is invalid.
 			return [0, 0];
 		}
-	};
-
-	// Register the MultiMonitorPanel class with GObject and return it.
-	return GObject.registerClass(MultiMonitorPanel);
-})();
+	}
+);

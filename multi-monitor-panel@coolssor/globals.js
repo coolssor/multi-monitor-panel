@@ -6,7 +6,7 @@ import { extensionInstance } from './extension.js';
 
 // Declaring a global object `g` with a property `mmPanel` initialized as an empty array.
 // This object is likely used to store global state or shared data for the application.
-export var g = {
+export const g = {
     mmPanel: []
 };
 
@@ -14,7 +14,7 @@ export var g = {
 // `classId` is expected to be a key for a setting, and the function returns its boolean value.
 export function unhideClass(classId) {
     // Access the settings through `extensionInstance` and retrieve the boolean value for `classId`.
-    let tmp = extensionInstance._settings().get_boolean(classId);
+    let tmp = extensionInstance.getSettings().get_boolean(classId);
     return tmp; // Return the retrieved boolean value.
 }
 

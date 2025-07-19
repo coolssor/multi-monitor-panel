@@ -8,9 +8,9 @@ import * as Layout from 'resource:///org/gnome/shell/ui/layout.js'; // Import th
 
 import * as MMPanel from './mmpanel.js'; // Import the custom Multi-monitor panel module.
 import { g } from './globals.js'; // Import global variables.
-var { mmPanel } = g; // Extract the `mmPanel` array from global variables.
+let { mmPanel } = g; // Extract the `mmPanel` array from global variables.
 
-var ENABLE_HOT_CORNERS = 'enable-hot-corners'; // Define the key for enabling/disabling hot corners.
+let ENABLE_HOT_CORNERS = 'enable-hot-corners'; // Define the key for enabling/disabling hot corners.
 
 export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
 	constructor(monitor) {
@@ -37,7 +37,7 @@ export const MultiMonitorPanelBox = class MultiMonitorPanelBox {
 	}
 };
 
-export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
+export let MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 	constructor(settings) {
 		// Initialize the layout manager with settings.
 		this._settings = settings;
@@ -155,11 +155,11 @@ export var MultiMonitorLayoutManager = class MultiMonitorLayoutManager {
 
 		let j = 0;
 		for (let i = 0; i < Main.layoutManager.monitors.length; i++) {
-			if (i != Main.layoutManager.primaryIndex) {
+			if (i !== Main.layoutManager.primaryIndex) {
 				// Skip the primary monitor.
 				let monitor = Main.layoutManager.monitors[i];
 				let monitorId = "i" + i + "x" + monitor.x + "y" + monitor.y + "w" + monitor.width + "h" + monitor.height;
-				if (monitorChange > 0 && j == this._monitorIds.length) {
+				if (monitorChange > 0 && j === this._monitorIds.length) {
 					// Add a new panel for a new monitor.
 					this._monitorIds.push(monitorId);
 					this._pushPanel(i, monitor);
