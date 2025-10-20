@@ -9,11 +9,24 @@ This is a fork of [lazanet/multi-monitors-add-on](https://github.com/lazanet/mul
 This particular fork enables functionality for GNOME 47/48, and has some planned additional features on top.
 
 ## Installation
-### Single-line installer
+### Easy
+[<img alt="A button that says Get it on GNOME Extensions" height="100" src="img/get-it-on-ego.svg">](https://extensions.gnome.org/extension/8333/multi-monitor-panel/)
 
-`git clone https://github.com/coolssor/multi-monitor-panel && cd multi-monitor-panel && cp -r multi-monitor-panel@coolssor ~/.local/share/gnome-shell/extensions/`
+### Manual
 
-Once completed, restart the shell (log out and back in, or run `killall -HUP gnome-shell`), then enable the extension.
+#### Install from releases
+1. Go to the [latest release](https://github.com/coolssor/multi-monitor-panel/releases)
+2. Download the attached ZIP file
+3. Run the following command: 
+
+#### Install from source
+
+1. Run the following commands:
+   1. `git clone https://github.com/coolssor/multi-monitor-panel`
+   2. `cd multi-monitor-panel`
+   3. `cp -r multi-monitor-panel@coolssor ~/.local/share/gnome-shell/extensions/`
+2. Restart the shell (log out and back in, or run `killall -HUP gnome-shell`)
+3. Enable the extension.
 
 ## Planned features
  - Integration with other extensions:
